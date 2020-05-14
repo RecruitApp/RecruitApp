@@ -11,13 +11,13 @@ const [offres, setOffres] = React.useState([]);
 const [token, setToken] = React.useState('');
 AsyncStorage.getItem("token").then((value) => {
     const tokenb = JSON.parse(value);
+    console.debug(tokenb);
     setToken(tokenb);
-    //console.debug(value);
 })
 .then(res => {
-    //do something else
+
 });
-console.debug(token);
+
 useEffect(() => {
     fetch(`${entrypoint}/offers`, {
         method: 'GET',
@@ -49,7 +49,7 @@ return (
             <Button onPress={() => navigation.goBack()}>Go Back</Button>
             <Button mode="contained" onPress={() => navigation.navigate('updateOffer', {
             offerId: 1,
-          })}>Editer</Button>
+        })}>Editer</Button>
         </Card.Actions>
         
         </Card>

@@ -109,9 +109,9 @@ export default function update() {
         <Button style={styles.Button} icon="pen" mode="contained" onPress={updateprofil}>
             Mettre à jour les informations
         </Button>
-        <Button style={styles.Button} icon="home" mode="contained" onPress={() => navigation.navigate('offers')}>
+{/*         <Button style={styles.Button} icon="home" mode="contained" onPress={() => navigation.navigate('offers')}>
             Offers
-        </Button>
+        </Button> */}
     </View>
     
     );

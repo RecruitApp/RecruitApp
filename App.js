@@ -72,7 +72,7 @@ function SettingsScreen() {
   return (
     <ProfilStack.Navigator>
     <ProfilStack.Screen name="profil" component={profil} />
-    <ProfilStack.Screen name="offers" component={HomeScreen} />
+    {/* <ProfilStack.Screen name="offers" component={HomeScreen} /> */}
   </ProfilStack.Navigator>
   );
 } 
@@ -98,6 +98,10 @@ const App = () => {
                       : 'home';
                   } else if (route.name === 'profil') {
                     iconName = focused ? 'account-circle' : 'account-circle';
+                  } else if (route.name === 'Offres') {
+                    iconName = focused ? 'search' : 'search';
+                  }else if (route.name === 'Update') {
+                    iconName = focused ? 'backup' : 'backup';
                   }
                   // You can return any component that you like here!
                   return <Icon name={iconName} size={size} color={color} />;

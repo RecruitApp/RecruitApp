@@ -14,6 +14,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import AsyncStorage from '@react-native-community/async-storage';
+
 
 
 import login from './react/Auth/login';
@@ -77,51 +79,6 @@ function SettingsScreen() {
   );
 } 
 
-
-const Tab = createBottomTabNavigator();
-
-const App = () => {
-  return (
-    <>
-    <NavigationContainer>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={styles.safeAreaView}>
-        <PaperProvider theme={theme}>
-            <Tab.Navigator
-              screenOptions={({ route }) => ({
-                tabBarIcon: ({ focused, color, size }) => {
-                  let iconName;
-
-                  if (route.name === 'Découvir') {
-                    iconName = focused
-                      ? 'home'
-                      : 'home';
-                  } else if (route.name === 'profil') {
-                    iconName = focused ? 'account-circle' : 'account-circle';
-                  } else if (route.name === 'Offres') {
-                    iconName = focused ? 'search' : 'search';
-                  }else if (route.name === 'Update') {
-                    iconName = focused ? 'backup' : 'backup';
-                  }
-                  // You can return any component that you like here!
-                  return <Icon name={iconName} size={size} color={color} />;
-                },
-              })}
-              tabBarOptions={{
-                activeTintColor: 'tomato',
-                inactiveTintColor: 'gray',
-              }}
-            >
-              <Tab.Screen name="Découvir" component={LoginScreen} />
-              <Tab.Screen name="profil" component={SettingsScreen} />
-              <Tab.Screen name="Offres" component={OffersScreen} />
-            </Tab.Navigator>
-        </PaperProvider>
-      </SafeAreaView>
-    </NavigationContainer>
-    </>
-  );
-};
 const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1
@@ -163,4 +120,52 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
 });
+
+
+const Tab = createBottomTabNavigator();
+
+const App = () => {
+  return (
+    <>
+    <NavigationContainer>
+      <StatusBar barStyle="dark-content" />
+      <SafeAreaView style={styles.safeAreaView}>
+        <PaperProvider theme={theme}>
+            <Tab.Navigator
+              screenOptions={({ route }) => ({
+                tabBarIcon: ({ focused, color, size }) => {
+                  let iconName;
+                  
+                  if (route.name === 'Découvir') {
+                    iconName = focused
+                      ? 'home'
+                      : 'home';
+                  } else if (route.name === 'profil') {
+                    iconName = focused ? 'account-circle' : 'account-circle';
+                  } else if (route.name === 'Offres') {
+                    iconName = focused ? 'search' : 'search';
+                  }else if (route.name === 'Update') {
+                    iconName = focused ? 'backup' : 'backup';
+                  }
+                  // You can return any component that you like here!
+                  return <Icon name={iconName} size={size} color={color} />;
+                },
+              })}
+              tabBarOptions={{
+                activeTintColor: 'tomato',
+                inactiveTintColor: 'gray',
+              }}
+            >
+
+          <Tab.Screen name="Découvir" component={LoginScreen} /> 
+            <Tab.Screen name="profil" component={SettingsScreen} /> 
+            <Tab.Screen name="Offres" component={OffersScreen} /> 
+            </Tab.Navigator>
+        </PaperProvider>
+      </SafeAreaView>
+    </NavigationContainer>
+    </>
+  );
+};
+
 export default App;

@@ -53,6 +53,8 @@ export default function SignInSide() {
                     setError(false);
                     const token = data.token;
                     AsyncStorage.setItem('token', JSON.stringify(token));
+                    AsyncStorage.setItem('user', JSON.stringify({ firstname :'',lastname:'', email:''}));
+                    
                 }
             })
             .catch((error) => {

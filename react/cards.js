@@ -35,6 +35,7 @@ useEffect(() => {
 
 return (
     <>
+        <Button mode="contained" onPress={() => navigation.navigate('createOffer')}>Créer une offre</Button>
         {/* {offres && offres.map((offre) => ( */}
         <Card style={styles.card}>
         <Card.Title title="Card Title" subtitle="Card Subtitle" />
@@ -46,8 +47,11 @@ return (
         <Card.Actions>
             <Button onPress={() => alert('test')}>Cancel</Button>
             <Button onPress={() => navigation.goBack()}>Go Back</Button>
+            <Button mode="contained" onPress={() => navigation.navigate('updateOffer', {
+            offerId: 1,
+          })}>Editer</Button>
         </Card.Actions>
-        <Button onPress={() => navigation.navigate('home')}>Go To HomeScreen</Button>
+        
         </Card>
         {/* ))}; */}
     </>

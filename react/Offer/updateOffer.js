@@ -24,7 +24,8 @@ const styles = StyleSheet.create({
     }
 });
 
-export default function updateOffer() {
+export default function updateOffer({route}) {
+    const { offerId } = route.params;
     const navigation = useNavigation();
     const [fetched, setFetched] = React.useState(false);
     const [name, setName] = React.useState('');
@@ -34,7 +35,7 @@ export default function updateOffer() {
     const [workPlace, setWorkPlace] = React.useState('');
     const [startDate, setStartDate] = React.useState('')
     const [isDatePickerVisible, setDatePickerVisibility] = React.useState(false);
- 
+    console.warn("A date has been picked: ", offerId);
     const showDatePicker = () => {
         setDatePickerVisibility(true);
     };

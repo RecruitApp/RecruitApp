@@ -104,76 +104,103 @@ export default function updateCandidature() {
         </Text>
         <TextInput
             variant="outlined"
-            id="nom"
+            id="lastname"
             label="Nom"
-            name="nom"
-            value={name}
-            onChangeText ={name => setName(name)}
+            name="lastname"
+            value={lastName}
+            onChangeText ={lastName => setLastName(lastName)}
             mode='outlined'
         />
         <TextInput 
-            multiline
             variant="outlined"
-            id="enterpriseDescription"
-            label="Description de l'entreprise"
-            name="enterpriseDescription"
+            id="firstname"
+            label="Prénom"
+            name="firstname"
             mode="outlined"
-            value={companyDescription}
-            onChangeText ={companyDescription => setCompanyDescription(companyDescription)}
+            value={firstName}
+            onChangeText ={firstName => setFirstName(firstName)}
         />
-        <TextInput 
-            multiline
-            label="Description de l'offre" 
-            id="offerDescription"
-            name="offerDescription"
-            mode="outlined"
-            variant="outlined"
-            value={offerDescription}
-            onChangeText ={offerDescription => setOfferDescription(offerDescription)}
-        />
+        <RadioButton.Group
+            onValueChange={checked => setChecked(checked)}
+            value={checked}
+        >
+            <RadioButton.Item label="Homme" value="Homme" />
+            <RadioButton.Item label="Femme" value="Femme" />
+        </RadioButton.Group>
+        
         <TextInput 
             disabled
-            label="Date de début" 
-            id="startDate"
-            name="startDate"
+            label="Photo" 
+            id="photo"
+            name="photo"
             mode="outlined"
             variant="outlined"
-            value = {startDate}
+            
         />
-        <Button icon="camera" mode="contained" onPress={showDatePicker}>
-        Choisir Date
+        <Button style={styles.Button} icon="pen" mode="contained" onPress={uploadphoto} >
+            Upload Photo
         </Button>
-        <DateTimePickerModal
-            isVisible={isDatePickerVisible}
-            mode="date"
-            onConfirm={handleConfirm}
-            onCancel={hideDatePicker}
+        <TextInput 
+            label="Email"
+            id="email"
+            name="email"
+            mode="outlined"
+            variant="outlined"
+            value={email}
+            onChangeText ={email => setEmail(email)}
         />
         <TextInput 
-            label="Type de contrat"
-            id="contractType"
-            name="contractType"
+            label="Age" 
+            id="age"
+            name="age"
             mode="outlined"
             variant="outlined"
-            value={contractType}
-            onChangeText ={contractType => setContractType(contractType)}
+            value={age}
+            onChangeText ={age => setAge(age)}
         />
         <TextInput 
-            label="Lieu de travail" 
-            id="workPlace"
-            name="workPlace"
+            label="Adresse" 
+            id="adresse"
+            name="adresse"
             mode="outlined"
             variant="outlined"
-            value={workPlace}
-            onChangeText ={workPlace => setWorkPlace(workPlace)}
+            value={adresse}
+            onChangeText ={adresse => setAdresse(adresse)}
         />
-        <Button style={styles.Button} icon="pen" mode="contained" onPress={updateOffer} >
-            Modifier
+        <TextInput 
+            multiline
+            label="Motivation" 
+            id="motivation"
+            name="motivation"
+            mode="outlined"
+            variant="outlined"
+            value={motivation}
+            onChangeText ={motivation => setMotivation(motivation)}
+        />
+        <TextInput 
+            label="Salaire" 
+            id="salaire"
+            name="salaire"
+            mode="outlined"
+            variant="outlined"
+            value={salaire}
+            onChangeText ={salaire => setAge(salaire)}
+        />
+        <TextInput 
+            label="CV" 
+            id="cv"
+            name="cv"
+            mode="outlined"
+            variant="outlined"
+            onChangeText ={cv => setAge(cv)}
+        />
+        <Button style={styles.Button} icon="pen" mode="contained" onPress={uploadcv} >
+            Upload Photo
         </Button>
-        <Button style={styles.Button} icon="pen" mode="contained" onPress={deleteOffer} >
-            Supprimer
+        <Button style={styles.Button} icon="pen" mode="contained" onPress={create} >
+            Créer
         </Button>
-    </ScrollView>
+        </ScrollView>
     
     );
 }

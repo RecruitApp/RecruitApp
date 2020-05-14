@@ -21,6 +21,7 @@ export default class UpdateOffre extends Component {
             contractType: this.state.contractType,
             workPlace: this.state.workPlace,
         }
+        let id = 1;
         this.state.call.put(data, id, "offer").then(value =>{
             if(value!== undefined){
                 this.setState({

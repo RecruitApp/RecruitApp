@@ -51,8 +51,8 @@ export default function SignInSide() {
                     setError(true);
                 } else if (data.hasOwnProperty('token')) {
                     setError(false);
-                    const token = data;
-                    AsyncStorage.setItem('Token', JSON.stringify(token));
+                    const token = data.token;
+                    AsyncStorage.setItem('token', JSON.stringify(token));
                 }
             })
             .catch((error) => {
@@ -81,6 +81,7 @@ export default function SignInSide() {
             label="Mot de passe"
             type="password"
             id="password"
+            secureTextEntry={true}
             value={password}
             onChangeText={password => setPassword(password)}
         />

@@ -20,8 +20,13 @@ import login from './react/Auth/login';
 import register from './react/Auth/register';
 import profil from './react/profil';
 import HomeScreen from './react/cards';
+
 import {ListOfCandidate,Apply} from './react/components/candidature';
 import {CreateOffer,ShowlistOffer, ShowOffer,UpdateOffer}  from './react/components/Offre';
+
+import createOffer from './react/Offer/createOffer';
+import updateOffer from './react/Offer/updateOffer';
+
 
 const theme = {...DefaultTheme, colors: {
     ...DefaultTheme.colors,
@@ -29,6 +34,7 @@ const theme = {...DefaultTheme, colors: {
     accent: 'yellow',
   },
 };
+
 
 const RegisterStack = createStackNavigator();
 
@@ -41,15 +47,42 @@ function RegisterScreen() {
   );
 }
 
+const LoginStack = createStackNavigator();
+
+
+function LoginScreen() {
+  return (
+    <LoginStack.Navigator>
+    <LoginStack.Screen name="login" component={login} />
+    <LoginStack.Screen name="register" component={register} />
+    </LoginStack.Navigator>
+  );
+}
+
+const OffersStack = createStackNavigator();
+
+
+function OffersScreen() {
+  return (
+    <OffersStack.Navigator>
+    <OffersStack.Screen name="offers" component={HomeScreen} />
+    <OffersStack.Screen name="createOffer" component={createOffer} />
+    <OffersStack.Screen name="updateOffer" component={updateOffer} />
+    </OffersStack.Navigator>
+  );
+}
+
 const ProfilStack = createStackNavigator();
 function SettingsScreen() {
   return (
     <ProfilStack.Navigator>
-      <ProfilStack.Screen name="register" component={register} />
-      <ProfilStack.Screen name="login" component={login} />
+
+    <ProfilStack.Screen name="profil" component={profil} />
+    <ProfilStack.Screen name="offers" component={HomeScreen} />
   </ProfilStack.Navigator>
   );
-}
+} 
+
 
 const Tab = createBottomTabNavigator();
 
@@ -69,7 +102,7 @@ const App = () => {
                     iconName = focused
                       ? 'home'
                       : 'home';
-                  } else if (route.name === 'Profil') {
+                  } else if (route.name === 'profil') {
                     iconName = focused ? 'account-circle' : 'account-circle';
                   }else {
                     iconName = focused ? 'account-circle' : 'account-circle';
@@ -83,14 +116,10 @@ const App = () => {
                 inactiveTintColor: 'gray',
               }}
             >
-              <Tab.Screen name="Découvir" component={HomeScreen} />
-              <Tab.Screen name="listCandidature" component={ListOfCandidate} />
-              <Tab.Screen name="CreateOffer" component={CreateOffer} />
-              <Tab.Screen name="ShowlistOffer" component={ShowlistOffer} />
-              <Tab.Screen name="ShowOffer" component={ShowOffer} />
-              <Tab.Screen name="UpdateOffer" component={UpdateOffer} />
-              <Tab.Screen name="Apply" component={Apply} />
-              <Tab.Screen name="Profil" component={SettingsScreen} />
+
+              <Tab.Screen name="Découvir" component={LoginScreen} />
+              <Tab.Screen name="profil" component={SettingsScreen} />
+              <Tab.Screen name="Offres" component={OffersScreen} />
             </Tab.Navigator>
         </PaperProvider>
       </SafeAreaView>

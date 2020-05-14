@@ -1,60 +1,65 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet} from 'react-native';
-import {Card, Title, Paragraph, Button, View} from 'react-native-paper';
+import {StyleSheet, useNavigation} from 'react-native';
+import {Card, Title, Paragraph, Button, View, FAB} from 'react-native-paper';
 import AsyncStorage from '@react-native-community/async-storage';
 import {entrypoint} from "./entrypoint";
 
 const HomeScreen = ({navigation}) => {
+//const navigation = useNavigation();
 const [count, setCount] = useState(null);
 const [offres, setOffres] = React.useState([]);
-
-const onSave = () => {
-    AsyncStorage.setItem('count', JSON.stringify(count)).then(() =>
-    alert('saved'),
-    );
-};
-const onAdd = () => {
-    setCount(count + 1);
-};
-
+const [token, setToken] = React.useState('');
+AsyncStorage.getItem("token").then((value) => {
+    const tokenb = JSON.parse(value);
+    setToken(tokenb);
+    //console.debug(value);
+})
+.then(res => {
+    //do something else
+});
+console.debug(token);
 useEffect(() => {
-    AsyncStorage.getItem('count').then(data => setCount(data));
-/*     fetch(`${entrypoint}/offers`)
-    .then((resp) => resp.json())
-    .then((data) => setOffres(data));
-    AsyncStorage.setItem('offers', JSON.stringify(data)).then(() =>
-    alert('Charged offers'), 
-    );*/
+    fetch(`${entrypoint}/offers`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'authorization': 'Bearer ' + token,
+        },
+    }).then((resp) => resp.json())
+    //.then((data) => setOffres(data));
+    //AsyncStorage.setItem('offers', JSON.stringify(data)).then(() =>
+    //alert('Charged offers'), 
+    //);
 }, []);
 
 return (
-    //<View>
-    //{offres && offres.map((offre) =>  (
-    <Card style={styles.card}>
-    <Card.Title title="Card Title" subtitle="Card Subtitle" />
-    <Card.Content>
-        {/*  "name": "string", {offre.name}
-        "companyDescription": "string", {offre.description}
-        "offerDescription": "string",
-        "startDate": "2020-05-13T12:18:54.024Z",
-        "typeOfContract": "string",
-        "workplace": "string" */}
-        <Title>Card title 2 </Title>
-        <Paragraph>Card 2 content</Paragraph>
-    </Card.Content>
-    <Card.Cover source={{uri: 'https://picsum.photos/700'}} />
-    <Card.Actions>
-        <Button onPress={() => alert('test')}>Cancel</Button>
-        <Button onPress={onAdd}>+1</Button>
-        <Button onPress={onSave}>Save</Button>
-        <Button onPress={() => navigation.goBack()}>Go Back</Button>
-        <Button onPress={() => navigation.navigate('home', {from: 'navigate'})}>
-        Go To HomeScreen
-        </Button>
-    </Card.Actions>
-    </Card>
-    //))}
-    //</View>
+    <>
+        {/* {offres && offres.map((offre) => ( */}
+        <Card style={styles.card}>
+        <Card.Title title="Card Title" subtitle="Card Subtitle" />
+        <Card.Content>
+            <Title>sa</Title>
+            <Paragraph>same</Paragraph>
+        </Card.Content>
+        <Card.Cover source={{uri: 'https://picsum.photos/700'}} />
+        <Card.Actions>
+            <Button onPress={() => alert('test')}>Cancel</Button>
+            <Button onPress={() => navigation.goBack()}>Go Back</Button>
+            <Button mode="contained" onPress={() => navigation.navigate('updateOffer', {
+            offerId: 1,
+          })}>Editer</Button>
+        </Card.Actions>
+        
+        </Card>
+        <FAB
+            style={styles.fab}
+            small
+            icon="plus"
+            onPress={() => navigation.navigate('createOffer')}
+        />
+        {/* ))}; */}
+    </>
 );
 };
 
@@ -63,6 +68,12 @@ card: {
     marginHorizontal: 10,
     marginVertical: 10,
 },
+fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
+  },
 });
 
 export default HomeScreen;

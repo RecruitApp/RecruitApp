@@ -20,8 +20,13 @@ import login from './react/Auth/login';
 import register from './react/Auth/register';
 import profil from './react/profil';
 import HomeScreen from './react/cards';
+
+import {ListOfCandidate,Apply} from './react/components/candidature';
+import {CreateOffer,ShowlistOffer, ShowOffer,UpdateOffer}  from './react/components/Offre';
+
 import createOffer from './react/Offer/createOffer';
 import updateOffer from './react/Offer/updateOffer';
+
 
 const theme = {...DefaultTheme, colors: {
     ...DefaultTheme.colors,
@@ -71,6 +76,7 @@ const ProfilStack = createStackNavigator();
 function SettingsScreen() {
   return (
     <ProfilStack.Navigator>
+
     <ProfilStack.Screen name="profil" component={profil} />
     <ProfilStack.Screen name="offers" component={HomeScreen} />
   </ProfilStack.Navigator>
@@ -98,6 +104,8 @@ const App = () => {
                       : 'home';
                   } else if (route.name === 'profil') {
                     iconName = focused ? 'account-circle' : 'account-circle';
+                  }else {
+                    iconName = focused ? 'account-circle' : 'account-circle';
                   }
                   // You can return any component that you like here!
                   return <Icon name={iconName} size={size} color={color} />;
@@ -108,6 +116,7 @@ const App = () => {
                 inactiveTintColor: 'gray',
               }}
             >
+
               <Tab.Screen name="Découvir" component={LoginScreen} />
               <Tab.Screen name="profil" component={SettingsScreen} />
               <Tab.Screen name="Offres" component={OffersScreen} />
@@ -118,6 +127,7 @@ const App = () => {
     </>
   );
 };
+
 const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1

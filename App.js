@@ -20,6 +20,8 @@ import login from './react/Auth/login';
 import register from './react/Auth/register';
 import profil from './react/profil';
 import HomeScreen from './react/cards';
+import createOffer from './react/Candidature/createCandidature';
+import updateOffer from './react/Offer/updateOffer';
 
 const theme = {...DefaultTheme, colors: {
     ...DefaultTheme.colors,
@@ -73,6 +75,27 @@ function SettingsScreen() {
   );
 } 
 
+const CreateOfferStack = createStackNavigator();
+
+function CreateOfferScreen(){
+  return (
+    <CreateOfferStack.Navigator>
+    <CreateOfferStack.Screen name="createOffer" component={createOffer} />
+  </CreateOfferStack.Navigator>
+  );
+}
+
+const UpdateOfferStack = createStackNavigator();
+
+function UpdateOfferScreen(){
+  return (
+    <UpdateOfferStack.Navigator>
+    <UpdateOfferStack.Screen name="updateOffer" component={updateOffer} />
+  </UpdateOfferStack.Navigator>
+  );
+}
+
+
 const Tab = createBottomTabNavigator();
 
 const App = () => {
@@ -105,6 +128,8 @@ const App = () => {
             >
               <Tab.Screen name="Découvir" component={LoginScreen} />
               <Tab.Screen name="profil" component={SettingsScreen} />
+              <Tab.Screen name="Offres" component={CreateOfferScreen} />
+              <Tab.Screen name="Update" component={UpdateOfferScreen} />
             </Tab.Navigator>
         </PaperProvider>
       </SafeAreaView>

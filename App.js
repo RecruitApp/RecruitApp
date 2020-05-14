@@ -20,6 +20,8 @@ import login from './react/Auth/login';
 import register from './react/Auth/register';
 import profil from './react/profil';
 import HomeScreen from './react/cards';
+import {ListOfCandidate,Apply} from './react/components/candidature';
+import {CreateOffer,ShowlistOffer, ShowOffer,UpdateOffer}  from './react/components/Offre';
 
 const theme = {...DefaultTheme, colors: {
     ...DefaultTheme.colors,
@@ -43,8 +45,8 @@ const ProfilStack = createStackNavigator();
 function SettingsScreen() {
   return (
     <ProfilStack.Navigator>
-    <ProfilStack.Screen name="register" component={register} />
-    <ProfilStack.Screen name="login" component={login} />
+      <ProfilStack.Screen name="register" component={register} />
+      <ProfilStack.Screen name="login" component={login} />
   </ProfilStack.Navigator>
   );
 }
@@ -69,6 +71,8 @@ const App = () => {
                       : 'home';
                   } else if (route.name === 'Profil') {
                     iconName = focused ? 'account-circle' : 'account-circle';
+                  }else {
+                    iconName = focused ? 'account-circle' : 'account-circle';
                   }
                   // You can return any component that you like here!
                   return <Icon name={iconName} size={size} color={color} />;
@@ -80,6 +84,12 @@ const App = () => {
               }}
             >
               <Tab.Screen name="Découvir" component={HomeScreen} />
+              <Tab.Screen name="listCandidature" component={ListOfCandidate} />
+              <Tab.Screen name="CreateOffer" component={CreateOffer} />
+              <Tab.Screen name="ShowlistOffer" component={ShowlistOffer} />
+              <Tab.Screen name="ShowOffer" component={ShowOffer} />
+              <Tab.Screen name="UpdateOffer" component={UpdateOffer} />
+              <Tab.Screen name="Apply" component={Apply} />
               <Tab.Screen name="Profil" component={SettingsScreen} />
             </Tab.Navigator>
         </PaperProvider>
@@ -88,6 +98,7 @@ const App = () => {
     </>
   );
 };
+
 const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1

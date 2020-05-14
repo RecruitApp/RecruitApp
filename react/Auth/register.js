@@ -3,6 +3,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { TextInput, Button, Text } from 'react-native-paper';
 import {View, StyleSheet} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import SwitchSelector from 'react-native-switch-selector';
+
 
 import {entrypoint} from "../entrypoint";
 
@@ -20,7 +22,7 @@ const styles = StyleSheet.create({
     Button:{
         marginTop:10,
 
-    }
+    },
 });
 
 
@@ -29,8 +31,9 @@ export default function SignUp() {
     const [firstname, setFirstname] = React.useState('');
     const [lastname, setLastname] = React.useState('');
     const [email, setEmail] = React.useState('');
-    const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const [roles, setRoles] = React.useState(["ROLE_USER"]);
+    const [isActive, setisActive] = React.useState(true);
     const [registered, setRegistered] = React.useState(false);
     const [error, setError] = React.useState(false);
 
@@ -38,7 +41,7 @@ export default function SignUp() {
         e.preventDefault();
         e.stopPropagation();
 
-        fetch(`${entrypoint}/user`, {
+        fetch(`${entrypoint}/users`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -46,10 +49,11 @@ export default function SignUp() {
             },
             body: JSON.stringify({
                 lastname,
+                roles,
                 firstname,
                 email,
-                username,
-                password
+                password,
+                isActive
                 }),
             })
                 .then((response) => response.json())
@@ -90,15 +94,6 @@ export default function SignUp() {
         />
 
         <TextInput
-            id="username"
-            label="username"
-            name="username"
-            value={username}
-            onChangeText={username => setUsername(username)}
-            mode='outlined'
-        />
-
-        <TextInput
             variant="outlined"
             id="email"
             label="Email"
@@ -107,6 +102,23 @@ export default function SignUp() {
             onChangeText ={email => setEmail(email)}
             mode='outlined'
         />
+        <Text>
+            Type de compte
+        </Text>
+
+        <SwitchSelector
+        initial={1}
+        onPress={roles => setRoles(roles)}
+        textColor={'#FF6347'}
+        selectedColor={'#fff'}
+        buttonColor={'#FF6347'}
+        borderColor={'#FF6347'}
+        hasPadding
+        options={[
+            { label: "Recruteur", value: ["ROLE_RECRUITER"]},
+            { label: "Candidat", value: ["ROLE_USER"],}
+        ]}
+        />
 
         <TextInput
             mode='outlined'
@@ -114,16 +126,16 @@ export default function SignUp() {
             label="Mot de passe"
             type="password"
             id="password"
+            secureTextEntry={true}
             value={password}
             onChangeText={password => setPassword(password)}
         />
-        <Button style={styles.Button} icon="home" mode="contained" onPress={() => navigation.navigate('login')}>
+{/*         <Button style={styles.Button} icon="home" mode="contained" onPress={() => navigation.navigate('login')}>
             Se connecter
-        </Button>
+        </Button> */}
         <Button style={styles.Button} icon="pen" mode="contained" onPress={register}>
             S'inscrire
         </Button>
     </View>
-    
     );
 }

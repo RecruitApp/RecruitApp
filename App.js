@@ -28,6 +28,7 @@ const theme = {...DefaultTheme, colors: {
   },
 };
 
+
 const RegisterStack = createStackNavigator();
 
 
@@ -39,15 +40,38 @@ function RegisterScreen() {
   );
 }
 
+const LoginStack = createStackNavigator();
+
+
+function LoginScreen() {
+  return (
+    <LoginStack.Navigator>
+    <LoginStack.Screen name="login" component={login} />
+    <LoginStack.Screen name="register" component={register} />
+    </LoginStack.Navigator>
+  );
+}
+
+const OffersStack = createStackNavigator();
+
+
+function OffersScreen() {
+  return (
+    <OffersStack.Navigator>
+    <OffersStack.Screen name="offers" component={HomeScreen} />
+    </OffersStack.Navigator>
+  );
+}
+
 const ProfilStack = createStackNavigator();
 function SettingsScreen() {
   return (
     <ProfilStack.Navigator>
-    <ProfilStack.Screen name="register" component={register} />
-    <ProfilStack.Screen name="login" component={login} />
+    <ProfilStack.Screen name="profil" component={profil} />
+    <ProfilStack.Screen name="offers" component={HomeScreen} />
   </ProfilStack.Navigator>
   );
-}
+} 
 
 const Tab = createBottomTabNavigator();
 
@@ -67,7 +91,7 @@ const App = () => {
                     iconName = focused
                       ? 'home'
                       : 'home';
-                  } else if (route.name === 'Profil') {
+                  } else if (route.name === 'profil') {
                     iconName = focused ? 'account-circle' : 'account-circle';
                   }
                   // You can return any component that you like here!
@@ -79,8 +103,8 @@ const App = () => {
                 inactiveTintColor: 'gray',
               }}
             >
-              <Tab.Screen name="Découvir" component={HomeScreen} />
-              <Tab.Screen name="Profil" component={SettingsScreen} />
+              <Tab.Screen name="Découvir" component={LoginScreen} />
+              <Tab.Screen name="profil" component={SettingsScreen} />
             </Tab.Navigator>
         </PaperProvider>
       </SafeAreaView>

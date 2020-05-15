@@ -23,7 +23,7 @@ export default class detailOffer extends Component {
             loading: true
         };
         this.navigation = this.props.navigation;
-        this.params = this.navigation.params;
+        this.offerId = this.props.route.params;
     }
     
     componentDidMount() {
@@ -31,7 +31,7 @@ export default class detailOffer extends Component {
             const tokenb = JSON.parse(value);
             console.debug(tokenb);
             this.setState({ token: tokenb }, () => {
-                fetch(`${entrypoint}/offer/${id}`, {
+                fetch(`${entrypoint}/offer/${this.offerId}`, {
                     method: 'GET',
                     headers: {
                         Accept: 'application/json',
@@ -54,11 +54,11 @@ export default class detailOffer extends Component {
                                 <View>
                                     <Text>offre N :{offre.id}</Text>
                                     <Text>nom de l'offre{offre.name}</Text>
-                                    <Text>{offre.companyDescription}</Text>
-                                    <Text>{offre.offerDescription}</Text>
-                                    <Text>{offre.startDate}</Text>
-                                    <Text>{offre.typeOfContract}</Text>
-                                    <Text>{offre.workplace}</Text>
+                                    <Text>Description 1:{offre.companyDescription}</Text>
+                                    <Text>Description de l'offre{offre.offerDescription}</Text>
+                                    <Text>Date de début{offre.startDate}</Text>
+                                    <Text>Type de contrat:{offre.typeOfContract}</Text>
+                                    <Text>Emplacement :{offre.workplace}</Text>
                                 </View>
                             )}
                                 <FAB

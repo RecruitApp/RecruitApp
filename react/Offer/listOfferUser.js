@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { ScrollView, TextInput, StyleSheet} from 'react-native';
+import { ScrollView, TextInput, StyleSheet, ActivityIndicator} from 'react-native';
 import {Card, Title, Paragraph, Button, View, FAB, Text} from 'react-native-paper';
 import AsyncStorage from '@react-native-community/async-storage';
 import {entrypoint} from "../entrypoint";
@@ -10,7 +10,16 @@ const styles = StyleSheet.create({
         margin: 16,
         right: 0,
         bottom: 0,
+    },    
+    container: {
+        flex: 1,
+        justifyContent: "center"
     },
+    horizontal: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        padding: 10
+    }
 });
 
 export default class listOfferUser extends Component {
@@ -75,7 +84,7 @@ export default class listOfferUser extends Component {
     render(){
         return (
             <ScrollView>
-                    { this.state.loading && <Text>Loading...</Text> }
+                    { this.state.loading && <ActivityIndicator size="large" color="#0000ff" />  }
 
                     { !this.state.loading && 
                         <>

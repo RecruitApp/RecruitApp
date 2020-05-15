@@ -24,6 +24,8 @@ import profil from './react/profil';
 import HomeScreen from './react/cards';
 import createOffer from './react/Offer/createOffer';
 import updateOffer from './react/Offer/updateOffer';
+import detailOffer from './react/Offer/detailOffer';
+import listOfferUser from './react/Offer/listOfferUser';
 
 const theme = {...DefaultTheme, colors: {
     ...DefaultTheme.colors,
@@ -33,14 +35,18 @@ const theme = {...DefaultTheme, colors: {
 };
 
 
-const RegisterStack = createStackNavigator();
+
+const OffersUserStack = createStackNavigator();
 
 
-function RegisterScreen() {
+function OffersUserScreen() {
   return (
-    <RegisterStack.Navigator>
-    <RegisterStack.Screen name="register" component={register} />
-  </RegisterStack.Navigator>
+    <OffersUserStack.Navigator>
+    <OffersUserStack.Screen name="offers" component={listOfferUser} />
+    <OffersUserStack.Screen name="createOffer" component={createOffer} />
+    <OffersUserStack.Screen name="updateOffer" component={updateOffer} />
+    <OffersUserStack.Screen name="detailOffer" component={detailOffer} />
+    </OffersUserStack.Navigator>
   );
 }
 
@@ -65,6 +71,7 @@ function OffersScreen() {
     <OffersStack.Screen name="offers" component={HomeScreen} />
     <OffersStack.Screen name="createOffer" component={createOffer} />
     <OffersStack.Screen name="updateOffer" component={updateOffer} />
+    <OffersStack.Screen name="detailOffer" component={detailOffer} />
     </OffersStack.Navigator>
   );
 }
@@ -144,7 +151,7 @@ const App = () => {
                     iconName = focused ? 'account-circle' : 'account-circle';
                   } else if (route.name === 'Offres') {
                     iconName = focused ? 'search' : 'search';
-                  }else if (route.name === 'Update') {
+                  }else if (route.name === 'Mes Offres') {
                     iconName = focused ? 'backup' : 'backup';
                   }
                   // You can return any component that you like here!
@@ -160,6 +167,7 @@ const App = () => {
           <Tab.Screen name="Découvir" component={LoginScreen} /> 
             <Tab.Screen name="profil" component={SettingsScreen} /> 
             <Tab.Screen name="Offres" component={OffersScreen} /> 
+            <Tab.Screen name="Mes Offres" component={OffersUserScreen} /> 
             </Tab.Navigator>
         </PaperProvider>
       </SafeAreaView>

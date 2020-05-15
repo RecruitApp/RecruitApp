@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { TextInput, Button, Text } from 'react-native-paper';
 import {View, StyleSheet} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import jwt from 'jwt-decode';
 
 import {entrypoint} from "../entrypoint";
 
@@ -53,7 +54,14 @@ export default function SignInSide() {
                     setError(false);
                     const token = data.token;
                     AsyncStorage.setItem('token', JSON.stringify(token));
-                    AsyncStorage.setItem('user', JSON.stringify({ firstname :'',lastname:'', email:''}));
+                    const user = jwt(token);
+                    AsyncStorage.setItem('user', JSON.stringify(user));
+/*                     AsyncStorage.getItem("user").then((value2) =>{
+                        iduser = JSON.parse(value2.id)
+                    })
+                    if(iduser===''){
+                        AsyncStorage.setItem('user', JSON.stringify({ firstname :'',lastname:'', email:''}));
+                    } */
                     
                 }
             })

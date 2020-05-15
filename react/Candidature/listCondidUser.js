@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     },
 });
 
-export default class listOfferUser extends Component {
+export default class listCondidUser extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -23,7 +23,8 @@ export default class listOfferUser extends Component {
             loading: true,
             id: null,
             username:'',
-            user:[]
+            user:[],
+            user2:[]
         };
         this.navigation = this.props.navigation;
     }
@@ -33,7 +34,7 @@ export default class listOfferUser extends Component {
         let userlog;
         let userdata;
         let user;
-    AsyncStorage.getItem("user").then((value3) => {
+    AsyncStorage.getItem("user2").then((value3) => {
         AsyncStorage.getItem("token").then((value) => {
             AsyncStorage.getItem("user").then((value2) =>{
                 userdata = JSON.parse(value2);
@@ -48,16 +49,16 @@ export default class listOfferUser extends Component {
                 }).then((resp) => resp.json())
                 .then((data) => {
                     user = data;
-                    AsyncStorage.setItem('user', JSON.stringify(user))}
+                    AsyncStorage.setItem('user2', JSON.stringify(user))}
                 );
             })
             userlog = JSON.parse(value3);
             //idb = userlog.id;
             const tokenb = JSON.parse(value);
             //id = this.state.user;
-            //console.debug(this.state.user);
+            console.debug(this.state.user2);
             this.setState({ token: tokenb, id: id }, () => {
-                fetch(`${entrypoint}/users/${userdata.id}/offers`, {
+                fetch(`${entrypoint}/users/${userdata.id}/proposals`, {
                     method: 'GET',
                     headers: {
                         Accept: 'application/json',
@@ -83,8 +84,8 @@ export default class listOfferUser extends Component {
                                 <Card style={styles.card} key={offre.id}>
                                     <Card.Title title="Card Title" subtitle="Card Subtitle" />
                                     <Card.Content>
-                                        <Title>{offre.name}</Title>
-                                        <Paragraph>{offre.offerDescription}</Paragraph>
+                                        <Title>{offre.applicant}</Title>
+                                        <Paragraph>{offre.offer}</Paragraph>
                                     </Card.Content>
                                     <Card.Cover source={{uri: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3900&q=80'}} />
                                     <Card.Actions>

@@ -24,6 +24,8 @@ import profil from './react/profil';
 import HomeScreen from './react/cards';
 import CreateOffer from './react/Offer/createOffer';
 import UpdateOffer from './react/Offer/updateOffer';
+import listOfferUser from './react/Offer/listOfferUser';
+import detailOffer from './react/Offer/detailOffer';
 
 const theme = {...DefaultTheme, colors: {
     ...DefaultTheme.colors,

@@ -78,9 +78,7 @@ export default class CreateOffer extends React.Component {
         offerDescription,
         startDate,
         contractType,
-        workPlace,e) {
-            e.preventDefault();
-            e.stopPropagation();
+        workPlace) {
 
         fetch(`${entrypoint}/offers`, {
             method: 'POST',

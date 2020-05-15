@@ -73,9 +73,11 @@ export default class HomeScreen extends React.Component {
                                     <Title>{offre.name}</Title>
                                     <Paragraph>{offre.offerDescription}</Paragraph>
                                 </Card.Content>
-                                <Card.Cover source={{uri: 'https://picsum.photos/700'}} />
+                                <Card.Cover source={{uri: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3900&q=80'}} />
                                 <Card.Actions>
-                                    <Button onPress={() => alert('test')}>Cancel</Button>
+                                    <Button onPress={() =>  this.props.navigation.navigate('detailOffer', {
+                                    offerId: offre.id,
+                                })}>Détail Offre</Button>
                                     <Button onPress={() => this.navigation.goBack()}>Go Back</Button>
                                     <Button mode="contained" onPress={() => this.props.navigation.navigate('updateOffer', {
                                     offerId: offre.id,

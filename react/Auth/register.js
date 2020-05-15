@@ -40,7 +40,7 @@ export default function SignUp() {
     function register(e) {
         e.preventDefault();
         e.stopPropagation();
-
+        
         fetch(`${entrypoint}/users`, {
             method: 'POST',
             headers: {
@@ -59,9 +59,11 @@ export default function SignUp() {
                 .then((response) => response.json())
                 .then((data) => {
                 if(data.hasOwnProperty('id')) {
+                    
                     setRegistered(true);
                     const user = data;
                     AsyncStorage.setItem('user', JSON.stringify(user));
+                    navigation.navigate('login')
                 }
                 })
                 .catch((error) => {

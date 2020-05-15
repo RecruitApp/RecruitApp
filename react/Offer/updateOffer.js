@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Component } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import { TextInput, Button, Text } from 'react-native-paper';
 import {View, StyleSheet, ScrollView} from 'react-native';
@@ -24,71 +24,80 @@ const styles = StyleSheet.create({
     }
 });
 
-export default function updateOffer({route}) {
-    const { offerId } = route.params;
-    const navigation = useNavigation();
-    const [fetched, setFetched] = React.useState(false);
-    const [name, setName] = React.useState('');
-    const [companyDescription, setCompanyDescription] = React.useState('');
-    const [offerDescription, setOfferDescription] = React.useState('');
-    const [contractType, setContractType] = React.useState('');
-    const [workPlace, setWorkPlace] = React.useState('');
-    const [startDate, setStartDate] = React.useState('')
-    const [isDatePickerVisible, setDatePickerVisibility] = React.useState(false);
-    console.warn("A date has been picked: ", offerId);
-    const showDatePicker = () => {
-        setDatePickerVisibility(true);
-    };
-    
-    const hideDatePicker = () => {
-        setDatePickerVisibility(false);
-    };
-    
-    const handleConfirm = (date) => {
-        console.warn("A date has been picked: ", date.toString());
-        setStartDate(date.toString());
-        hideDatePicker();
-    };
-    
-    useEffect(() => {
-        if(!fetched) {
-            fetch(`${entrypoint}/offer/${offerId}`)
-                .then((resp) => resp.json())
-                .then((data) => {
-                    setName(data.response.name);
-                    setCompanyDesciption(data.response.companyDescription);
-                    setOfferDescription(data.response.offerDescription);
-                    setStartDate(data.response.startDate);
-                    setContractType(data.response.contractType);
-                    setWorkPlace(data.response.workPlace);
-                    
-                    setFetched(true);
-                })
-        }
-      }, offerId);
+export default class UpdateOffer extends React.Component {
 
-    function deleteOffer(e) {
-        e.preventDefault();
-        e.stopPropagation();
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: '',
+            companyDescription: '',
+            offerDescription: '',
+            contractType: '',
+            workPlace: '',
+            startDate: '',
+            isDatePickerVisible: false,
+            
+            token: '',
+            loading: true
+        };
+        this.navigation = this.props.navigation;
+        this.offerId = this.props.route.params;
+    } 
 
-        fetch(`${entrypoint}/offer`, {
-            method: 'DELETE',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
+    componentDidMount() {
+        AsyncStorage.getItem("token").then((value) => {
+            const tokenb = JSON.parse(value);
+            console.debug(tokenb);
+            this.setState({ token: tokenb }, () => {
+                fetch(`${entrypoint}/offers/${this.offerId}`, {
+                    method: 'GET',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                        'authorization': 'Bearer ' + this.state.token,
+                    }
+                }).then((resp) => resp.json())
+                .then((data) => this.setState({ offres: data, loading: false }));
+            });
         })
+        
     }
 
-    function updateOffer(e) {
-        e.preventDefault();
-        e.stopPropagation();
+    showDatePicker = () => {
+        console.warn(this.state.isDatePickerVisible);
+        this.setState({ isDatePickerVisible: true });
+        //setDatePickerVisibility(true);
+        console.warn(this.state.isDatePickerVisible);
+        
+    };
+    
+    hideDatePicker = () => {
+        this.setState({ isDatePickerVisible: false });
+        //setDatePickerVisibility(false);
+    };
+    
+    handleConfirm = date => {
+        console.warn("A date has been picked: ", date);
+        this.state.startDate = date.toString();
+        //setStartDate(date.toString());
+        this.hideDatePicker();
+    };
+    
+    createOffer(name,
+        companyDescription,
+        offerDescription,
+        startDate,
+        contractType,
+        workPlace,e) {
+            e.preventDefault();
+            e.stopPropagation();
 
-        fetch(`${entrypoint}/offer`, {
-            method: 'PUT',
+        fetch(`${entrypoint}/offers`, {
+            method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
+                'authorization': 'Bearer ' + this.state.token,
             },
             body: JSON.stringify({
                 name,
@@ -103,19 +112,18 @@ export default function updateOffer({route}) {
                 console.error(error);
                 });
     }
-
+render(){
     return (
     <ScrollView style={styles.view}>
         <Text style={styles.text}>
-        Mise à jour de l'offre
+        Créer une offre
         </Text>
         <TextInput
             variant="outlined"
             id="nom"
             label="Nom"
             name="nom"
-            value={name}
-            onChangeText ={name => setName(name)}
+            onChangeText ={name=> this.setState({ name: name })}
             mode='outlined'
         />
         <TextInput 
@@ -125,8 +133,7 @@ export default function updateOffer({route}) {
             label="Description de l'entreprise"
             name="enterpriseDescription"
             mode="outlined"
-            value={companyDescription}
-            onChangeText ={companyDescription => setCompanyDescription(companyDescription)}
+            onChangeText ={companyDescription=> this.setState({ companyDescription: companyDescription })}
         />
         <TextInput 
             multiline
@@ -135,8 +142,7 @@ export default function updateOffer({route}) {
             name="offerDescription"
             mode="outlined"
             variant="outlined"
-            value={offerDescription}
-            onChangeText ={offerDescription => setOfferDescription(offerDescription)}
+            onChangeText = {offerDescription=> this.setState({ offerDescription: offerDescription })}
         />
         <TextInput 
             disabled
@@ -145,16 +151,16 @@ export default function updateOffer({route}) {
             name="startDate"
             mode="outlined"
             variant="outlined"
-            value = {startDate}
+            value = {this.state.startDate}
         />
-        <Button icon="camera" mode="contained" onPress={showDatePicker}>
+        <Button icon="camera" mode="contained" onPress={this.showDatePicker}>
         Choisir Date
         </Button>
         <DateTimePickerModal
-            isVisible={isDatePickerVisible}
+            isVisible={this.state.isDatePickerVisible}
             mode="date"
-            onConfirm={handleConfirm}
-            onCancel={hideDatePicker}
+            onConfirm={this.handleConfirm}
+            onCancel={this.hideDatePicker}
         />
         <TextInput 
             label="Type de contrat"
@@ -162,8 +168,7 @@ export default function updateOffer({route}) {
             name="contractType"
             mode="outlined"
             variant="outlined"
-            value={contractType}
-            onChangeText ={contractType => setContractType(contractType)}
+            onChangeText ={contractType=> this.setState({ contractType: contractType })}
         />
         <TextInput 
             label="Lieu de travail" 
@@ -171,16 +176,19 @@ export default function updateOffer({route}) {
             name="workPlace"
             mode="outlined"
             variant="outlined"
-            value={workPlace}
-            onChangeText ={workPlace => setWorkPlace(workPlace)}
+            onChangeText ={workPlace=> this.setState({ workPlace: workPlace })}
         />
-        <Button style={styles.Button} icon="pen" mode="contained" onPress={updateOffer} >
-            Modifier
-        </Button>
-        <Button style={styles.Button} icon="pen" mode="contained" onPress={deleteOffer} >
-            Supprimer
+        <Button style={styles.Button} icon="pen" mode="contained" onPress={this.createOffer(
+                this.state.name,
+                this.state.companyDescription,
+                this.state.offerDescription,
+                this.state.startDate,
+                this.state.contractType,
+                this.state.workPlace)} >
+            Créer
         </Button>
     </ScrollView>
     
     );
+}
 }

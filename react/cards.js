@@ -76,8 +76,8 @@ export default class HomeScreen extends React.Component {
                                 <Card.Cover source={{uri: 'https://picsum.photos/700'}} />
                                 <Card.Actions>
                                     <Button onPress={() => alert('test')}>Cancel</Button>
-                                    <Button onPress={() => this.state.navigation.goBack()}>Go Back</Button>
-                                    <Button mode="contained" onPress={() => this.state.navigation.navigate('updateOffer', {
+                                    <Button onPress={() => this.navigation.goBack()}>Go Back</Button>
+                                    <Button mode="contained" onPress={() => this.props.navigation.navigate('updateOffer', {
                                     offerId: offre.id,
                                 })}>Editer</Button>
                                 </Card.Actions>
@@ -87,7 +87,7 @@ export default class HomeScreen extends React.Component {
                                 style={styles.fab}
                                 small
                                 icon="plus"
-                                onPress={() => this.state.navigation.navigate('createOffer')}
+                                onPress={() => this.navigation.navigate('createOffer')}
                         />
                     </>
                 }

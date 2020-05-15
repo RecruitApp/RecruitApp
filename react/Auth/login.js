@@ -34,7 +34,8 @@ export default function SignInSide() {
     function login(e) {
         e.preventDefault();
         e.stopPropagation();
-
+        
+        
         fetch(`${entrypoint}/authentication_token`, {
             method: 'POST',
             headers: {
@@ -48,11 +49,13 @@ export default function SignInSide() {
         })
             .then((response) => response.json())
             .then((data) => {
+                
                 if(data.hasOwnProperty('error')) {
                     setError(true);
                 } else if (data.hasOwnProperty('token')) {
                     setError(false);
                     const token = data.token;
+                    console.debug(data);
                     AsyncStorage.setItem('token', JSON.stringify(token));
                     const user = jwt(token);
                     AsyncStorage.setItem('user', JSON.stringify(user));
@@ -63,7 +66,9 @@ export default function SignInSide() {
                         AsyncStorage.setItem('user', JSON.stringify({ firstname :'',lastname:'', email:''}));
                     } */
                     
+                    navigation.navigate('profil')
                 }
+                
             })
             .catch((error) => {
                 console.error(error);

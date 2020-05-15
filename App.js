@@ -22,10 +22,8 @@ import login from './react/Auth/login';
 import register from './react/Auth/register';
 import profil from './react/profil';
 import HomeScreen from './react/cards';
-import createOffer from './react/Offer/createOffer';
-import updateOffer from './react/Offer/updateOffer';
-import detailOffer from './react/Offer/detailOffer';
-import listOfferUser from './react/Offer/listOfferUser';
+import CreateOffer from './react/Offer/createOffer';
+import UpdateOffer from './react/Offer/updateOffer';
 
 const theme = {...DefaultTheme, colors: {
     ...DefaultTheme.colors,
@@ -58,6 +56,7 @@ function LoginScreen() {
     <LoginStack.Navigator>
     <LoginStack.Screen name="login" component={login} />
     <LoginStack.Screen name="register" component={register} />
+    <LoginStack.Screen name="profil" component={profil}/>
     </LoginStack.Navigator>
   );
 }
@@ -69,7 +68,7 @@ function OffersScreen() {
   return (
     <OffersStack.Navigator>
     <OffersStack.Screen name="offers" component={HomeScreen} />
-    <OffersStack.Screen name="createOffer" component={createOffer} />
+    <OffersStack.Screen name="createOffer" component={CreateOffer} />
     <OffersStack.Screen name="updateOffer" component={updateOffer} />
     <OffersStack.Screen name="detailOffer" component={detailOffer} />
     </OffersStack.Navigator>

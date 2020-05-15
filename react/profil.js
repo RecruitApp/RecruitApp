@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
 export default function update() {
     const [user, setUser] = React.useState({});
     const navigation = useNavigation();
-    AsyncStorage.getItem("user").then((value) => {
+    /*AsyncStorage.getItem("user").then((value) => {
         const userd = JSON.parse(value);
         setUser(userd);
         setFirstname(userd.firstname)
@@ -37,7 +37,7 @@ export default function update() {
     .then(res => {
         //
         //do something else
-    });
+    });*/
     //console.debug(user.firstname);   
     const [firstname, setFirstname] = React.useState(user.firstname);
     const [lastname, setLastname] = React.useState(user.lastname);

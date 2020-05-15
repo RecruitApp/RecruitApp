@@ -26,6 +26,7 @@ import createOffer from './react/Offer/createOffer';
 import updateOffer from './react/Offer/updateOffer';
 import listOfferUser from './react/Offer/listOfferUser';
 import detailOffer from './react/Offer/detailOffer';
+import listCondidUser from './react/Candidature/listCondidUser';
 
 const theme = {...DefaultTheme, colors: {
     ...DefaultTheme.colors,
@@ -82,6 +83,7 @@ function SettingsScreen() {
   return (
     <ProfilStack.Navigator>
     <ProfilStack.Screen name="profil" component={profil} />
+    <ProfilStack.Screen name="candidature" component={listCondidUser} />
     {/* <ProfilStack.Screen name="offers" component={HomeScreen} /> */}
   </ProfilStack.Navigator>
   );
